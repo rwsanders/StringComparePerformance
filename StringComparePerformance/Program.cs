@@ -8,7 +8,7 @@ namespace StringComparePerformance
     {
         static void Main(string[] args)
         {
-            var alphabet = "abcdefghijklmnopqrstuvwxyz";
+            const string alphabet = "abcdefghijklmnopqrstuvwxyz";
             var passShort = "The quick brown fox jumps over the lazy dog".ToLower();
             var failShort = "The quick brown fox jump over the lazy dog".ToLower();
             var failLong = "The quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dogThe quick brown fox jump over the lazy dog".ToLower();
@@ -50,6 +50,7 @@ namespace StringComparePerformance
             Test1(alphabet, input, result, sw, calcs);
             Test2(alphabet, input, result, sw, calcs);
             Test3(alphabet, input, result, sw, calcs);
+            Test4(alphabet, input, result, sw, calcs);
             Console.WriteLine($"--------  END COMPARISON TEST  --------\n");
         }
 
@@ -106,6 +107,19 @@ namespace StringComparePerformance
             sw.Stop();
             Console.WriteLine($"Test 3\nTotal Time: {sw.ElapsedTicks}\nResult: {result}\n");
             sw.Reset();
-        }        
+        }
+
+        public static void Test4(string alphabet, string input, bool result, Stopwatch sw, int calcs)
+        {
+            sw.Start();
+            for (int x = 0; x < calcs; x++)
+            {
+                result = input.ToLower().GroupBy(x => x).Select(x => x.Key).Intersect(alphabet).Count() == 26;
+            }
+
+            sw.Stop();
+            Console.WriteLine($"Test 4\nTotal Time: {sw.ElapsedTicks}\nResult: {result}\n");
+            sw.Reset();
+        }
     }
 }
